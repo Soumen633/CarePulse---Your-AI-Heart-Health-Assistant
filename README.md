@@ -8,11 +8,10 @@
 [![Flask](https://img.shields.io/badge/Flask-2.0%2B-green)](https://flask.palletsprojects.com/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.0%2B-orange)](https://scikit-learn.org/)
 [![License](https://img.shields.io/badge/License-MIT-red)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/)
 
 **An Advanced Machine Learning System for Heart Disease Risk Assessment with Intelligent Diet Recommendations**
 
-[Live Demo](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/) • [Features](#-key-features) • [Installation](#-installation--setup) • [Usage](#-usage) • [Model Performance](#-model-performance) • [Contributors](#-contributors)
+[Features](#-key-features) • [Installation](#-installation--setup) • [Usage](#-usage) • [Model Performance](#-model-performance) • [Contributors](#-contributors)
 
 </div>
 
@@ -44,7 +43,6 @@ This comprehensive **Heart Disease Prediction System** combines state-of-the-art
 - **Comprehensive Assessment**: Evaluates 20 clinical and lifestyle parameters
 - **Personalized Care**: Generates customized diet plans based on individual risk profiles
 - **Professional Web Interface**: Flask-based application with real-time image crawling
-- **Live Deployment**: Fully operational at [CarePulse.in](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/)
 - **Comprehensive Analysis**: Detailed model performance metrics and visualizations
 - **Production Ready**: Scalable architecture with proper error handling and validation
 
@@ -109,37 +107,68 @@ This comprehensive **Heart Disease Prediction System** combines state-of-the-art
 📦 Heart Disease Prediction System
 ├── 🚀 app.py                          # Main Flask application with 20-feature prediction
 ├── 📄 requirements.txt                # Python dependencies
-├── 📖 readme.md                       # Project documentation
+├── 📖 README.md                       # Project documentation
+├── 📜 LICENSE                         # MIT License
 │
 ├── 📊 assets/                         # Visualization and analysis charts
 │   ├── 🖼️ banner.jpg                 # Project banner image
-│   ├── 📈 CLASS WEIGHT.jpg           # Class weight impact analysis
-│   ├── 📊 class_distribution.png     # Dataset class distribution
+│   ├── 📊 class distribution.png     # Dataset class distribution
+│   ├── 📈 class_weight.png           # Class weight impact analysis
+│   ├── 🎯 confusion_matrix.png       # Model confusion matrix
 │   ├── 🔗 correlation analysis.png   # Feature correlation matrix
-│   ├── 🎯 evaluation matrics.jpg     # Model performance metrics
-│   ├── 📉 IMPACT ANALYSIS.jpg        # Parameter impact analysis
-│   ├── 📈 learning curves.jpg        # Model learning curves
-│   └── ✅ VALIDATION CURVES.jpg      # Hyperparameter validation
+│   ├── 🔗 elation features.png       # Feature relationships
+│   ├── 📈 learning_curves.png        # Model learning curves
+│   ├── 📉 parameter_impact.png       # Parameter impact analysis
+│   └── ✅ validation_curves.png      # Hyperparameter validation
 │
 ├── 💾 data/                          # Dataset and configurations
-│   ├── 🏥 balanced_heart_disease.csv # Processed training dataset (20 features)
+│   ├── 🏥 cardio_train_comma.csv    # Training dataset (20 features)
 │   └── 🍎 Final_diet_plan.json      # Generated diet recommendations
 │
 ├── 📁 diet_pdfs/                     # Generated diet plan PDFs
 │
 ├── 🤖 models/                        # Trained ML models and metadata
-│   ├── ℹ️ feature_info_20250906_075310.pkl        # 20-feature information
-│   ├── 🧠 heart_disease_model_20250906_075310.pkl # Trained Random Forest model
-│   ├── 🏷️ label_encoders_20250906_075310.pkl     # Label encoders
-│   └── 📋 model_metadata_20250906_075310.pkl     # Model metadata
+│   ├── ℹ️ feature_info_20251207_155704.pkl        # 20-feature information
+│   ├── 🧠 heart_disease_model_20251207_155704.pkl # Trained Random Forest model
+│   ├── 🏷️ label_encoders_20251207_155704.pkl     # Label encoders
+│   └── 📋 model_metadata_20251207_155704.pkl     # Model metadata
 │
 ├── 🎨 static/                        # Web application static files
 │   ├── 💄 css/
 │   │   └── style.css                 # Custom stylesheets
 │   ├── 🖼️ images/                   # Web interface images
-│   │   ├── favicon.jpg               # Website favicon
-│   │   ├── placeholder.jpg           # Default placeholder image
-│   │   ├── 🍽️ diet_images/           # Crawled food images (auto-generated)
+│   │   ├── 01_correlation_matrix.png           # Correlation heatmap
+│   │   ├── 02_feature_distributions.png        # Feature distribution plots
+│   │   ├── 03_before_after_comparison.png      # Model comparison
+│   │   ├── 04_confusion_matrices_tuned.png     # Tuned confusion matrices
+│   │   ├── 05_feature_importance.png           # Feature importance chart
+│   │   ├── 06_roc_curves.png                   # ROC curve analysis
+│   │   ├── 07_gb_confusion_matrix_detailed.png # Detailed confusion matrix
+│   │   ├── favicon.jpg                         # Website favicon
+│   │   ├── placeholder.jpg                     # Default placeholder image
+│   │   ├── placeholder.txt                     # Placeholder text
+│   │   ├── target_distribution.png             # Target variable distribution
+│   │   ├── 🍽️ diet_images/                    # Crawled food images (auto-generated)
+│   │   │   ├── almond_butter_and_banana_roll-ups_in_whole_wheat_tortilla/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── chickpea_and_carrot_curry_with_quinoa/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── chickpea_and_spinach_stew_with_jowar_roti/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── millet_and_vegetable_dosa_with_tomato_chutney/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── mixed_vegetable_and_masoor_dal_pulao_with_raita/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── steamed_fenugreek_leaves_and_amaranth_leaves/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── vegetable_and_paneer_kathi_roll_with_mint_chutney_dinner_portion/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── vegetable_and_paneer_pizza_whole_wheat_base_2_slices_with_side_salad/
+│   │   │   │   └── 000001.jpg
+│   │   │   ├── vegetable_kootu_with_rice/
+│   │   │   │   └── 000001.jpg
+│   │   │   └── vegetable_millet_upma/
+│   │   │       └── 000001.jpg
 │   │   └── 👥 team/                  # Team member photos
 │   │       ├── Team_member1.png
 │   │       ├── Team_member2.jpg
@@ -153,80 +182,179 @@ This comprehensive **Heart Disease Prediction System** combines state-of-the-art
 │   ├── 🏗️ base.html                  # Base template
 │   ├── 📞 contact.html               # Contact page
 │   ├── 📊 diet_charts.html           # Diet charts display
-│   ├── 📊 model_statistics.html      # Brief description about model's Performance
 │   ├── 🍎 diet_plan.html             # Individual diet plan view
 │   ├── 🏠 index.html                 # Homepage
+│   ├── 📊 model_statistics.html      # Model performance statistics
+│   ├── 📄 pdf_template.html          # PDF generation template
 │   ├── 🔮 predict.html               # Prediction input form (20 features)
 │   └── 📋 result.html                # Prediction results display
 │
 └── 🔧 utils/                         # Development notebooks and utilities
-    ├── 📓 Diet_chart.ipynb           # Diet recommendation development
-    ├── 🧠 Heart.ipynb                # Model training and evaluation
-    └── 🖥️ Interface.ipynb            # Interface development and testing
+    └── 📓 model_build.ipynb          # Model training and evaluation notebook
 ```
 
 ---
 
 ## 📊 Model Performance
 
-Our Random Forest model demonstrates exceptional performance across all evaluation metrics using 20 comprehensive features:
+We evaluated multiple machine learning algorithms and performed comprehensive hyperparameter tuning to achieve optimal cardiovascular disease prediction. Our analysis compared five state-of-the-art models across various performance metrics.
 
-### 🎯 **Core Performance Metrics**
-- **Accuracy**: 94.6% - Outstanding overall prediction accuracy
-- **Precision**: 99.7% - High reliability in positive predictions  
-- **Recall**: 86.6% - Excellent sensitivity in detecting heart disease
-- **F1-Score**: 92.7% - Optimal balance between precision and recall
-- **ROC-AUC**: 92.7% - Superior discriminative ability
+### 🎯 **Model Comparison - Best Performers**
 
-![Model Performance](assets/confusion_matrix.png)
+After extensive hyperparameter tuning, our models achieved the following performance:
 
-### 📈 **Learning Curve Analysis**
+| Model | Accuracy | F1-Score | ROC-AUC | Precision | Recall |
+|-------|----------|----------|---------|-----------|--------|
+| **XGBoost** | **83.35%** | **81.41%** | **91.00%** | High | Strong |
+| **Gradient Boosting** | 83.32% | 81.21% | **91.04%** | **92.93%** | 72.11% |
+| **CatBoost** | 83.26% | 81.15% | **91.13%** | High | Strong |
+| **Random Forest** | 82.99% | 81.03% | 90.58% | Good | Good |
+| **Decision Tree** | 82.73% | 80.54% | 90.42% | Good | Good |
 
-The learning curves demonstrate robust model performance with minimal overfitting:
+**Best Model Selection**: **XGBoost** was selected as our primary model due to:
+- Highest accuracy (83.35%) and F1-score (81.41%)
+- Excellent ROC-AUC score (91.00%)
+- Balanced precision-recall trade-off
+- Superior generalization on test data
 
-![Learning Curves](assets/learning_curves.png)
+### 📊 **Dataset Characteristics**
 
-**Key Insights:**
-- **Training F1**: Consistently high (~1.00) across all training set sizes
-- **Validation F1**: Steady improvement from 0.33 to 0.85 as training data increases
-- **Convergence**: Model shows excellent learning capability with sufficient data
-- **Stability**: No signs of overfitting, indicating good generalization
+![Target Distribution](static/images/target_distribution.png)
 
-### ⚖️ **Class Weight Optimization**
+**Dataset Balance:**
+- **Perfectly Balanced Dataset**: 50% Disease vs 50% No Disease
+- **Total Samples**: 70,000 patient records
+- **Training/Test Split**: 80/20 stratified split
+- **No Class Imbalance**: Ensures unbiased model training
 
-Advanced class imbalance handling through systematic weight optimization:
+### 🔗 **Feature Correlation Analysis**
 
-![Class Weight Impact](assets/class_weight.png)
+![Correlation Matrix](static/images/01_correlation_matrix.png)
 
-**Optimization Results:**
-- **Best Configuration**: Balanced class weights (0:1, 1:5)
-- **Impact on Metrics**: Optimal precision-recall trade-off achieved
-- **Robustness**: Consistent performance across different weight configurations
+**Key Correlations Identified:**
+- **Strong Positive Correlations**:
+  - `ap_hi` & `ap_lo`: 0.72 (systolic & diastolic blood pressure)
+  - `ap_hi` & `pulse_pressure`: 0.81
+  - `bmi` & `weight`: 0.85
+  - `cholesterol` & `cholesterol_gluc_interaction`: 0.78
+- **Target Correlations**:
+  - `health_index` shows negative correlation (-0.38) with cardiovascular disease
+  - Blood pressure metrics show positive correlations with disease risk
 
-### 🔧 **Hyperparameter Impact Analysis**
+### 📈 **Feature Distribution Analysis**
 
-Comprehensive analysis of parameter effects on model performance:
+![Feature Distributions](static/images/02_feature_distributions.png)
 
-![Impact Analysis](assets/parameter_impact.png)
+**Distribution Insights:**
+- **Weight**: Normal distribution with slight right skew for disease cases
+- **Blood Pressure (ap_hi, ap_lo)**: Disease cases show higher distributions
+- **Age**: Older patients show higher disease prevalence
+- **BMI**: Higher BMI values correlate with increased disease risk
+- **Cholesterol & Glucose**: Elevated levels in disease cases
+- **Lifestyle Factors**: Smoking and alcohol show distinct patterns
 
-**Parameter Optimization:**
-- **n_estimators**: Optimal at 200-300 trees for best performance
-- **max_depth**: Sweet spot at 25-30 for complexity-accuracy balance  
-- **min_samples_split**: 2-5 provides optimal splitting criteria
-- **min_samples_leaf**: 1-2 leaves offer best generalization
-- **max_features**: 'sqrt' setting delivers superior results
+### 🔧 **Hyperparameter Tuning Impact**
 
-### ✅ **Validation Curves**
+![Before vs After Tuning](static/images/03_before_after_comparison.png)
 
-Systematic hyperparameter validation ensuring optimal model configuration:
+**Tuning Improvements:**
 
-![Validation Curves](assets/validation_curves.png)
+| Model | Accuracy Improvement | F1-Score Improvement |
+|-------|---------------------|---------------------|
+| Decision Tree | +5.4% | +3.6% |
+| Random Forest | +1.8% | +1.1% |
+| Gradient Boosting | +0.1% | +0.5% |
+| XGBoost | +0.1% | +0.3% |
+| CatBoost | +0.1% | +0.2% |
 
-**Validation Insights:**
-- **n_estimators**: 400 trees provide optimal performance plateau
-- **max_depth**: 30 levels offer best complexity-performance trade-off
-- **min_samples_split**: 2 samples ensure proper tree splitting
-- **min_samples_leaf**: 1 sample per leaf maximizes learning capacity
+**Tuning Results:**
+- **Decision Tree** showed the most significant improvement after tuning
+- **Ensemble methods** (RF, GB, XGB, CatBoost) were already near-optimal
+- All models benefited from systematic hyperparameter optimization
+
+### 🎯 **Confusion Matrix Analysis**
+
+![Confusion Matrices](static/images/04_confusion_matrices_tuned.png)
+
+**Detailed Performance Breakdown:**
+
+**XGBoost (Best Model):**
+- True Negatives: 8207 | False Positives: 548
+- False Negatives: 2365 | True Positives: 6380
+- **High Specificity**: Excellent at identifying healthy patients
+- **Strong Sensitivity**: Good at detecting disease cases
+
+**Gradient Boosting:**
+- True Negatives: 8275 | False Positives: 480
+- False Negatives: 2439 | True Positives: 6306
+- **Highest Precision**: 92.93% (lowest false positive rate)
+- **Trade-off**: Slightly lower recall at 72.11%
+
+### 🌟 **Feature Importance Analysis**
+
+![Feature Importance](static/images/05_feature_importance.png)
+
+**Top 5 Most Important Features Across All Models:**
+
+1. **Systolic Blood Pressure (ap_hi)**: Consistently #1 across all models
+2. **Cholesterol Level**: Strong predictor in all models
+3. **Diastolic Blood Pressure (ap_lo)**: Critical cardiovascular indicator
+4. **Age**: Significant risk factor
+5. **BMI/Weight**: Important metabolic indicators
+
+**Model-Specific Insights:**
+- **Decision Tree & Gradient Boosting**: Heavy reliance on `ap_hi` (60% importance)
+- **Random Forest**: More balanced feature importance distribution
+- **XGBoost & CatBoost**: Cholesterol emerges as top feature
+- **Interaction Features**: `cholesterol_gluc_interaction` shows importance in tree models
+
+### 📉 **ROC Curve Analysis**
+
+![ROC Curves](static/images/06_roc_curves.png)
+
+**ROC-AUC Performance:**
+- 🥇 **CatBoost**: 0.9113 AUC (Best discriminative ability)
+- 🥈 **Gradient Boosting**: 0.9104 AUC
+- 🥉 **XGBoost**: 0.9100 AUC
+- **Random Forest**: 0.9058 AUC
+- **Decision Tree**: 0.9042 AUC
+
+**ROC Analysis Insights:**
+- All models achieve AUC > 0.90 (excellent classification)
+- Ensemble methods outperform single Decision Tree
+- CatBoost shows slightly superior true positive rate across all thresholds
+- XGBoost selected for deployment due to best accuracy-AUC balance
+
+### 🔍 **Detailed Performance Metrics**
+
+![Gradient Boosting Details](static/images/07_gb_confusion_matrix_detailed.png)
+
+**Gradient Boosting Detailed Analysis:**
+- **Accuracy**: 83.32%
+- **F1-Score**: 81.21%
+- **Precision**: 92.93% (Excellent - very few false positives)
+- **Recall**: 72.11% (Good - catches most disease cases)
+
+**Clinical Significance:**
+- High precision means patients flagged as "at risk" are very likely to have disease
+- Good recall ensures most disease cases are identified
+- Ideal for screening applications where false positives can be followed up
+
+### 📊 **Model Selection Rationale**
+
+**Why XGBoost was chosen for deployment:**
+
+✅ **Best Overall Accuracy**: 83.35% - Highest among all models
+✅ **Superior F1-Score**: 81.41% - Best precision-recall balance
+✅ **Excellent ROC-AUC**: 91.00% - Strong discriminative power
+✅ **Production Ready**: Fast inference, efficient memory usage
+✅ **Robust Performance**: Consistent results across validation sets
+✅ **Feature Flexibility**: Handles complex interactions well
+
+**Alternative Considerations:**
+- **CatBoost**: Best ROC-AUC (91.13%) - excellent for ranking predictions
+- **Gradient Boosting**: Highest precision (92.93%) - ideal for minimizing false positives
+- **Random Forest**: Good interpretability - easier to explain to clinicians
 
 ---
 
@@ -273,9 +401,8 @@ The application should start running on `http://localhost:5000`
 
 ### **🌐 Web Interface Usage**
 
-1. **Access the Live Application**
-   - Visit [CarePulse](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/) for the live deployment
-   - Or run locally at `http://localhost:5000`
+1. **Access the Application**
+   - Run locally at `http://localhost:5000`
 
 2. **Navigate to Prediction Page**
    - Click on "Heart Disease Prediction" or navigate to `/predict`
@@ -298,19 +425,7 @@ The application should start running on `http://localhost:5000`
 #### **Model Training & Evaluation**
 ```bash
 # Open Jupyter notebook for model development
-jupyter notebook utils/Heart.ipynb
-```
-
-#### **Diet Plan Customization**
-```bash
-# Customize diet recommendations
-jupyter notebook utils/Diet_chart.ipynb
-```
-
-#### **Interface Testing**
-```bash
-# Test and modify interface components
-jupyter notebook utils/Interface.ipynb
+jupyter notebook utils/model_build.ipynb
 ```
 
 ---
@@ -429,24 +544,6 @@ jupyter notebook utils/Interface.ipynb
 
 ---
 
-## 🌐 Live Deployment
-
-### **Production Environment**
-- **Live URL**: [CarePulse](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/)
-- **Hosting**: Production-ready Flask deployment
-- **Features**: All 20-feature prediction capabilities
-- **Performance**: Real-time image crawling and PDF generation
-- **Monitoring**: Health check endpoint for system status
-
-### **Deployment Features**
-- **Auto-scaling**: Handles concurrent user sessions
-- **Image Management**: Automatic cleanup of crawled food images
-- **Session Management**: User session tracking and cleanup
-- **Error Handling**: Comprehensive error pages and logging
-- **Security**: Input validation and sanitization
-
----
-
 ## 🔮 Future Enhancements
 
 ### **🤖 Machine Learning Improvements**
@@ -500,10 +597,6 @@ We extend our gratitude to:
 - Beta testers who helped refine the user experience
 - Academic advisors for guidance on machine learning best practices
 
-
-
-
-
 ---
 
 ## 📞 Support & Contact
@@ -512,7 +605,6 @@ We extend our gratitude to:
 For direct inquiries, collaborations, or commercial use:
 - Email: [carepulse.in@gmail.com](mailto:carepulse.in@gmail.com)
 
----
 ---
 
 <div align="center">
@@ -523,12 +615,8 @@ For direct inquiries, collaborations, or commercial use:
 
 **💡 Share your ideas in the discussions!**
 
-**🌐 Visit our live application: [CarePulse.in](https://heart-diseaseprediction-with-personalized-diet-p-production.up.railway.app/)**
-
 ---
 
-
 *Made with ❤️ for healthcare innovation*
-
 
 </div>
