@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CarePulse - Diet Plan Report</title>
+    <style>
+      /* ==================== RESET & BASE ==================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+          sans-serif;
+        color: #1e293b;
+        background: white;
+        line-height: 1.5;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      /* Prevent page breaks inside these elements */
+      .no-break {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Force page break after */
+      .page-break {
+        page-break-after: always;
+        break-after: always;
+        clear: both;
+      }
+
+      /* Prevent orphans and widows */
+      p,
+      li {
+        orphans: 3;
+        widows: 3;
+      }
+
+      /* ==================== COLORS ==================== */
+      :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --secondary: #10b981;
+        --accent: #f59e0b;
+        --danger: #ef4444;
+        --gray-50: #f9fafb;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-600: #6b7280;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --gray-900: #111827;
+      }
+
+      /* ==================== COVER PAGE ==================== */
+      .cover-page {
+        height: 297mm;
+        width: 210mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cover-page::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+      }
+
+      .cover-content {
+        position: relative;
+        z-index: 1;
+        padding: 40px;
+      }
+
+      .cover-logo {
+        font-size: 100px;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .cover-title {
+        font-size: 56px;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 10px;
+        letter-spacing: -1px;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .cover-subtitle {
+        font-size: 28px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 50px;
+      }
+
+      .cover-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 35px 45px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .cover-info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 2px solid var(--gray-100);
+      }
+
+      .cover-info-row:last-child {
+        border-bottom: none;
+      }
+
+      .cover-info-label {
+        font-size: 14px;
+        color: var(--gray-600);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .cover-info-value {
+        font-size: 18px;
+        color: var(--gray-900);
+        font-weight: 700;
+      }
+
+      .cover-badge {
+        display: inline-block;
+        padding: 6px 18px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 16px;
+        color: white;
+      }
+
+      .cover-badge.success {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+      .cover-badge.warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+      .cover-badge.danger {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+      }
+
+      .cover-footer {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 2px solid var(--gray-200);
+        color: var(--gray-600);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* ==================== PAGE CONTAINER ==================== */
+      .page-container {
+        width: 210mm;
+        padding: 20mm 18mm;
+        background: white;
+      }
+
+      /* ==================== HEADERS ==================== */
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      .page-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .page-header-logo {
+        font-size: 42px;
+      }
+
+      .page-header-text h1 {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--gray-900);
+        margin: 0;
+      }
+
+      .page-header-text p {
+        font-size: 12px;
+        color: var(--gray-600);
+        margin: 0;
+      }
+
+      .section-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        padding: 16px 25px;
+        margin: 30px 0 20px 0;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+        page-break-after: avoid;
+      }
+
+      .section-header-icon {
+        font-size: 28px;
+      }
+
+      .subsection-header {
+        color: var(--primary-dark);
+        font-size: 18px;
+        font-weight: 700;
+        margin: 25px 0 12px 0;
+        padding: 12px 0 12px 18px;
+        border-left: 4px solid var(--primary);
+        background: #dbeafe;
+        border-radius: 0 8px 8px 0;
+        page-break-after: avoid;
+      }
+
+      /* ==================== INFO CARDS ==================== */
+      .info-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .info-card {
+        background: white;
+        border: 2px solid var(--gray-200);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .info-card-label {
+        font-size: 11px;
+        color: var(--gray-600);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+
+      .info-card-value {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--gray-900);
+      }
+
+      .info-card-subtext {
+        font-size: 11px;
+        color: var(--gray-600);
+        margin-top: 4px;
+      }
+
+      /* ==================== TABLES ==================== */
+      .modern-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 20px 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        page-break-inside: auto;
+      }
+
+      .modern-table thead {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+      }
+
+      .modern-table th {
+        padding: 14px 16px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 12px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .modern-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--gray-200);
+        font-size: 13px;
+        color: var(--gray-700);
+      }
+
+      .modern-table tbody tr {
+        background: white;
+        page-break-inside: avoid;
+      }
+
+      .modern-table tbody tr:nth-child(even) {
+        background: var(--gray-50);
+      }
+
+      .modern-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-label {
+        font-weight: 600;
+        color: var(--gray-800);
+      }
+
+      /* ==================== RISK BADGES ==================== */
+      .risk-display {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+      .risk-display.success {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+
+      .risk-display.warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      }
+
+      .risk-display.danger {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      }
+
+      /* ==================== DIET CHARTS ==================== */
+      .chart-wrapper {
+        margin: 30px 0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+        border: 2px solid var(--gray-200);
+        page-break-inside: avoid;
+      }
+
+      .chart-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        page-break-after: avoid;
+      }
+
+      .chart-header.recommended {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+
+      .chart-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .chart-number {
+        font-size: 24px;
+        font-weight: 800;
+        color: white;
+      }
+
+      .recommended-star {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        color: white;
+      }
+
+      .chart-calories {
+        font-size: 20px;
+        font-weight: 800;
+        color: white;
+      }
+
+      /* ==================== MEALS ==================== */
+      .meal-section {
+        padding: 20px;
+        border-bottom: 2px solid var(--gray-200);
+        background: white;
+        page-break-inside: avoid;
+      }
+
+      .meal-section:last-child {
+        border-bottom: none;
+      }
+
+      .meal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        font-weight: 700;
+        page-break-after: avoid;
+      }
+
+      .meal-header.breakfast {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: var(--gray-900);
+      }
+
+      .meal-header.lunch {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: var(--gray-900);
+      }
+
+      .meal-header.snacks {
+        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        color: var(--gray-900);
+      }
+
+      .meal-header.dinner {
+        background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+        color: var(--gray-900);
+      }
+
+      .meal-title {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .meal-calories-badge {
+        font-size: 18px;
+        padding: 6px 16px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 50px;
+      }
+
+      /* ==================== FOOD ITEMS ==================== */
+      .food-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .food-card {
+        background: var(--gray-50);
+        border: 2px solid var(--gray-200);
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        gap: 14px;
+        page-break-inside: avoid;
+      }
+
+      .food-image-wrapper {
+        flex-shrink: 0;
+        width: 75px;
+        height: 75px;
+      }
+
+      .food-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .food-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+      }
+
+      .food-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .food-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--gray-900);
+        line-height: 1.3;
+      }
+
+      .food-badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .food-calorie-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        background: linear-gradient(135deg, var(--secondary), #059669);
+        color: white;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .food-type-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .food-type-badge.veg {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+      }
+
+      .food-type-badge.non-veg {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+      }
+
+      .food-description {
+        font-size: 11px;
+        color: var(--gray-600);
+        line-height: 1.4;
+        margin-top: 3px;
+      }
+
+      /* ==================== STATISTICS ==================== */
+      .stats-showcase {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin: 25px 0;
+      }
+
+      .stat-box {
+        background: linear-gradient(135deg, var(--gray-50), white);
+        border: 2px solid var(--gray-200);
+        border-radius: 12px;
+        padding: 20px 16px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .stat-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .stat-value {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 10px;
+        color: var(--gray-600);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* ==================== PROGRESS BARS ==================== */
+      .progress-container {
+        margin: 20px 0;
+      }
+
+      .progress-item {
+        margin-bottom: 16px;
+        page-break-inside: avoid;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+
+      .progress-label {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gray-800);
+      }
+
+      .progress-value {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .progress-bar-wrapper {
+        height: 30px;
+        background: var(--gray-200);
+        border-radius: 50px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 12px;
+        color: white;
+      }
+
+      .progress-bar-fill.primary {
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      }
+
+      .progress-bar-fill.recommended {
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+      }
+
+      /* ==================== RECOMMENDATIONS ==================== */
+      .recommendations-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 20px 0;
+      }
+
+      .recommendation-item {
+        background: white;
+        border-left: 4px solid var(--primary);
+        border-radius: 6px;
+        padding: 14px 18px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        page-break-inside: avoid;
+      }
+
+      .recommendation-icon {
+        font-size: 20px;
+        color: var(--secondary);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .recommendation-text {
+        font-size: 13px;
+        color: var(--gray-700);
+        line-height: 1.6;
+        flex: 1;
+      }
+
+      /* ==================== ALERT BOXES ==================== */
+      .alert-box {
+        border-radius: 12px;
+        padding: 20px 25px;
+        margin: 25px 0;
+        border: 2px solid;
+        page-break-inside: avoid;
+      }
+
+      .alert-box.info {
+        background: #dbeafe;
+        border-color: var(--primary);
+      }
+
+      .alert-box.warning {
+        background: #fef3c7;
+        border-color: var(--accent);
+      }
+
+      .alert-box.danger {
+        background: #fee2e2;
+        border-color: var(--danger);
+      }
+
+      .alert-title {
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .alert-box.info .alert-title {
+        color: var(--primary-dark);
+      }
+      .alert-box.warning .alert-title {
+        color: #92400e;
+      }
+      .alert-box.danger .alert-title {
+        color: #991b1b;
+      }
+
+      .alert-content {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--gray-700);
+      }
+
+      .alert-content ul {
+        margin: 12px 0;
+        padding-left: 18px;
+      }
+
+      .alert-content li {
+        margin: 8px 0;
+      }
+
+      /* ==================== HYBRID DIET ==================== */
+      .hybrid-visual {
+        margin: 25px 0;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        border: 2px solid var(--gray-200);
+        page-break-inside: avoid;
+      }
+
+      .hybrid-progress-bar {
+        height: 45px;
+        background: var(--gray-200);
+        border-radius: 50px;
+        overflow: hidden;
+        display: flex;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .hybrid-segment {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      .hybrid-segment.veg {
+        background: linear-gradient(90deg, #10b981, #059669);
+        color: white;
+      }
+
+      .hybrid-segment.non-veg {
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+        color: white;
+      }
+
+      .hybrid-legend {
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        margin-top: 18px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .legend-color {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+      }
+
+      .legend-color.veg {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+
+      .legend-color.non-veg {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+
+      /* ==================== DISCLAIMER ==================== */
+      .disclaimer {
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        border: 3px solid var(--danger);
+        border-radius: 16px;
+        padding: 25px 30px;
+        margin: 35px 0;
+        box-shadow: 0 4px 18px rgba(239, 68, 68, 0.2);
+        page-break-inside: avoid;
+      }
+
+      .disclaimer-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .disclaimer-icon {
+        font-size: 36px;
+      }
+
+      .disclaimer-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #991b1b;
+      }
+
+      .disclaimer-text {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--gray-800);
+      }
+
+      /* ==================== FOOTER ==================== */
+      .page-footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid var(--gray-300);
+        text-align: center;
+      }
+
+      .footer-brand {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 6px;
+      }
+
+      .footer-text {
+        font-size: 11px;
+        color: var(--gray-600);
+      }
+
+      /* ==================== PRINT OPTIMIZATION ==================== */
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+      <div class="cover-content">
+        <div class="cover-logo">🫀</div>
+        <h1 class="cover-title">CarePulse</h1>
+        <h2 class="cover-subtitle">Comprehensive Health & Diet Plan Report</h2>
+
+        <div class="cover-card">
+          <div class="cover-info-row">
+            <span class="cover-info-label">Patient Profile</span>
+            <span class="cover-info-value"
+              >{{ outcome.user_data.gender }}, {{ outcome.user_data.age }}
+              years</span
+            >
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">Risk Assessment</span>
+            <span class="cover-badge {{ outcome.risk_color }}"
+              >{{ outcome.risk_level }}</span
+            >
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">Diet Plan Type</span>
+            <span class="cover-info-value">
+              {% if diet_type == 'hybrid' %} Hybrid ({{ veg_percentage }}% Veg)
+              {% elif diet_type == 'vegetarian' %} Vegetarian {% else %}
+              Non-Vegetarian {% endif %}
+            </span>
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">Total Diet Charts</span>
+            <span class="cover-info-value">{{ diet_charts|length }} Plans</span>
+          </div>
+
+          <div class="cover-footer">
+            <strong>Report Generated:</strong><br />
+            {{ generation_date.strftime('%B %d, %Y at %I:%M %p') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-break"></div>
+
+    <!-- PATIENT INFORMATION -->
+    <div class="page-container">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-header-logo">🏥</div>
+          <div class="page-header-text">
+            <h1>CarePulse Health Report</h1>
+            <p>Personalized Diet & Wellness Plan</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-header-icon">👤</span>
+        <span>Patient Information & Health Profile</span>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon">🎂</div>
+          <div class="info-card-label">Age</div>
+          <div class="info-card-value">{{ outcome.user_data.age }}</div>
+          <div class="info-card-subtext">years old</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">⚖️</div>
+          <div class="info-card-label">BMI</div>
+          <div class="info-card-value">{{ outcome.user_data.bmi }}</div>
+          <div class="info-card-subtext">Body Mass Index</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">❤️</div>
+          <div class="info-card-label">Blood Pressure</div>
+          <div class="info-card-value" style="font-size: 20px">
+            {{ outcome.user_data.ap_hi }}/{{ outcome.user_data.ap_lo }}
+          </div>
+          <div class="info-card-subtext">mmHg</div>
+        </div>
+      </div>
+
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th style="width: 40%">Health Parameter</th>
+            <th style="width: 60%">Current Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-label">Full Name</td>
+            <td>Patient</td>
+          </tr>
+          <tr>
+            <td class="table-label">Age & Gender</td>
+            <td>
+              {{ outcome.user_data.age }} years, {{ outcome.user_data.gender }}
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Body Mass Index (BMI)</td>
+            <td><strong>{{ outcome.user_data.bmi }}</strong> kg/m²</td>
+          </tr>
+          <tr>
+            <td class="table-label">Blood Pressure</td>
+            <td>
+              <strong
+                >{{ outcome.user_data.ap_hi }}/{{ outcome.user_data.ap_lo
+                }}</strong
+              >
+              mmHg
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Cholesterol Level</td>
+            <td>{{ outcome.user_data.cholesterol }}</td>
+          </tr>
+          <tr>
+            <td class="table-label">Glucose Level</td>
+            <td>{{ outcome.user_data.glucose }}</td>
+          </tr>
+          <tr>
+            <td class="table-label">Smoking Status</td>
+            <td>{{ outcome.user_data.smoking }}</td>
+          </tr>
+          <tr>
+            <td class="table-label">Alcohol Consumption</td>
+            <td>{{ outcome.user_data.alcohol }}</td>
+          </tr>
+          <tr>
+            <td class="table-label">Physical Activity Level</td>
+            <td>{{ outcome.user_data.active }}</td>
+          </tr>
+          <tr>
+            <td class="table-label">Diet Preference</td>
+            <td>
+              <strong
+                >{% if diet_type == 'hybrid' %}Hybrid Diet ({{ veg_percentage
+                }}% Vegetarian, {{ 100 - veg_percentage }}% Non-Vegetarian){%
+                elif diet_type == 'vegetarian' %}Vegetarian{% else
+                %}Non-Vegetarian{% endif %}</strong
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page-break"></div>
+
+    <!-- RISK ASSESSMENT -->
+    <div class="page-container">
+      <div class="section-header">
+        <span class="section-header-icon">⚠️</span>
+        <span>Comprehensive Risk Assessment</span>
+      </div>
+
+      <div class="alert-box danger" style="margin-bottom: 25px">
+        <div class="alert-title">
+          <span>🎯</span><span>Your Heart Disease Risk Evaluation</span>
+        </div>
+        <div class="alert-content">
+          Based on your health parameters and lifestyle factors, our advanced AI
+          model has assessed your cardiovascular health risk. This assessment
+          helps in creating a personalized diet and lifestyle plan tailored to
+          your needs.
+        </div>
+      </div>
+
+      <div
+        class="info-cards-grid"
+        style="grid-template-columns: repeat(2, 1fr); margin-bottom: 25px"
+      >
+        <div class="info-card" style="grid-column: 1 / -1">
+          <div class="info-card-icon">🎯</div>
+          <div class="info-card-label">Risk Level Assessment</div>
+          <div style="margin: 12px 0">
+            <span class="risk-display {{ outcome.risk_color }}"
+              >{{ outcome.risk_level }}</span
+            >
+          </div>
+          <div class="info-card-subtext">
+            Based on comprehensive health analysis
+          </div>
+        </div>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="info-card-icon">📊</div>
+          <div class="info-card-label">Risk Probability</div>
+          <div class="info-card-value">{{ outcome.risk_probability }}%</div>
+          <div class="info-card-subtext">Likelihood Score</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🎯</div>
+          <div class="info-card-label">Confidence Level</div>
+          <div class="info-card-value" style="font-size: 20px">
+            {{ outcome.confidence_level }}
+          </div>
+          <div class="info-card-subtext">Model Certainty</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">📋</div>
+          <div class="info-card-label">Risk Category</div>
+          <div class="info-card-value" style="font-size: 16px">
+            {{ outcome.risk_category.replace('_', ' ').title() }}
+          </div>
+          <div class="info-card-subtext">Classification</div>
+        </div>
+      </div>
+
+      <table class="modern-table" style="margin-top: 25px">
+        <thead>
+          <tr>
+            <th style="width: 50%">Assessment Parameter</th>
+            <th style="width: 50%">Result & Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-label">Heart Disease Risk Level</td>
+            <td>
+              <span
+                class="risk-display {{ outcome.risk_color }}"
+                style="padding: 5px 14px; font-size: 13px"
+                >{{ outcome.risk_level }}</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Risk Probability Score</td>
+            <td>
+              <strong>{{ outcome.risk_probability }}%</strong> probability of
+              cardiovascular risk
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Assessment Confidence</td>
+            <td>
+              {{ outcome.confidence_level }} confidence in prediction accuracy
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Risk Classification</td>
+            <td>
+              Categorized as
+              <strong
+                >{{ outcome.risk_category.replace('_', ' ').title() }}</strong
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="table-label">Recommendation Priority</td>
+            <td>
+              {% if outcome.risk_category == 'high_risk' %}
+              <strong style="color: var(--danger)"
+                >Immediate dietary and lifestyle intervention
+                recommended</strong
+              >
+              {% elif outcome.risk_category == 'moderate_risk' %}
+              <strong style="color: var(--accent)"
+                >Moderate dietary adjustments and monitoring advised</strong
+              >
+              {% else %}
+              <strong style="color: var(--secondary)"
+                >Preventive measures and healthy maintenance suggested</strong
+              >
+              {% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page-break"></div>
+
+    <!-- DIET PLAN OVERVIEW -->
+    <div class="page-container">
+      <div class="section-header">
+        <span class="section-header-icon">📊</span>
+        <span>Personalized Diet Plan Overview</span>
+      </div>
+
+      <div class="alert-box info">
+        <div class="alert-title">
+          <span>💡</span><span>About Your Diet Plan</span>
+        </div>
+        <div class="alert-content">
+          This comprehensive diet plan has been scientifically designed based on
+          your health assessment, risk profile, and dietary preferences. The
+          plan includes <strong>{{ diet_charts|length }}</strong>
+          carefully balanced meal charts with an average daily caloric intake of
+          <strong
+            >{{ (diet_charts|sum(attribute='total_calories') /
+            diet_charts|length)|round(0)|int }} calories</strong
+          >. Each chart provides nutritional variety while maintaining your
+          health goals.
+        </div>
+      </div>
+
+      {% set recommended_chart = diet_charts|selectattr('is_recommended',
+      'equalto', true)|first %} {% if recommended_chart %}
+      <div class="alert-box warning" style="margin-top: 20px">
+        <div class="alert-title">
+          <span>⭐</span><span>Recommended Chart for You</span>
+        </div>
+        <div class="alert-content">
+          We recommend following
+          <strong>Chart #{{ recommended_chart.chart_number }}</strong> as your
+          primary dietary guide. This chart has been identified as the most
+          balanced option for your specific health needs, providing optimal
+          nutritional distribution and caloric balance.
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="stats-showcase">
+        <div class="stat-box">
+          <div class="stat-icon">📋</div>
+          <div class="stat-value">{{ diet_charts|length }}</div>
+          <div class="stat-label">Total Diet Charts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-value">
+            {{ (diet_charts|sum(attribute='total_calories') /
+            diet_charts|length)|round(0)|int }}
+          </div>
+          <div class="stat-label">Average Calories</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon">📉</div>
+          <div class="stat-value">
+            {{ diet_charts|map(attribute='total_calories')|min }}
+          </div>
+          <div class="stat-label">Minimum Calories</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon">📈</div>
+          <div class="stat-value">
+            {{ diet_charts|map(attribute='total_calories')|max }}
+          </div>
+          <div class="stat-label">Maximum Calories</div>
+        </div>
+      </div>
+
+      <div class="subsection-header">
+        📈 Calorie Distribution Across Diet Charts
+      </div>
+      <div class="progress-container">
+        {% set max_calories = diet_charts|map(attribute='total_calories')|max %}
+        {% for chart in diet_charts %}
+        <div class="progress-item">
+          <div class="progress-header">
+            <span class="progress-label"
+              >Chart #{{ chart.chart_number }}{% if chart.is_recommended %} ⭐
+              Recommended{% endif %}</span
+            >
+            <span class="progress-value">{{ chart.total_calories }} kcal</span>
+          </div>
+          <div class="progress-bar-wrapper">
+            <div
+              class="progress-bar-fill {% if chart.is_recommended %}recommended{% else %}primary{% endif %}"
+              style="width: {{ (chart.total_calories / max_calories * 100)|round(2) }}%"
+            >
+              {{ chart.total_calories }} cal
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if diet_type == 'hybrid' %}
+      <div class="subsection-header">⚖️ Hybrid Diet Balance Visualization</div>
+      <div class="hybrid-visual">
+        <div class="hybrid-progress-bar">
+          <div class="hybrid-segment veg" style="width: {{ veg_percentage }}%">
+            <span>{{ veg_percentage }}% Vegetarian</span>
+          </div>
+          <div
+            class="hybrid-segment non-veg"
+            style="width: {{ 100 - veg_percentage }}%"
+          >
+            <span>{{ 100 - veg_percentage }}% Non-Veg</span>
+          </div>
+        </div>
+        <div class="hybrid-legend">
+          <div class="legend-item">
+            <div class="legend-color veg"></div>
+            <span>Vegetarian Meals ({{ veg_percentage }}%)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color non-veg"></div>
+            <span>Non-Vegetarian Meals ({{ 100 - veg_percentage }}%)</span>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          text-align: center;
+          color: var(--gray-600);
+          margin-top: 18px;
+          font-size: 13px;
+        "
+      >
+        Your personalized hybrid diet combines the nutritional benefits of both
+        vegetarian and non-vegetarian food sources in a {{ veg_percentage }}/{{
+        100 - veg_percentage }} ratio for optimal balanced nutrition.
+      </p>
+      {% endif %}
+    </div>
+    <div class="page-break"></div>
+
+    <!-- INDIVIDUAL DIET CHARTS -->
+    {% for chart in diet_charts %}
+    <div class="page-container">
+      <div class="chart-wrapper">
+        <div
+          class="chart-header {% if chart.is_recommended %}recommended{% endif %}"
+        >
+          <div class="chart-title">
+            <span class="chart-number"
+              >📋 Diet Chart #{{ chart.chart_number }}</span
+            >
+            {% if chart.is_recommended %}<span class="recommended-star"
+              >⭐ RECOMMENDED PLAN</span
+            >{% endif %}
+          </div>
+          <div class="chart-calories">
+            🔥 {{ chart.total_calories }} kcal/day
+          </div>
+        </div>
+
+        <!-- Breakfast -->
+        {% if chart.breakfast %}
+        <div class="meal-section">
+          <div class="meal-header breakfast">
+            <div class="meal-title"><span>🌅</span><span>Breakfast</span></div>
+            <div class="meal-calories-badge">
+              {{ chart.breakfast|sum(attribute='calories') }} kcal
+            </div>
+          </div>
+          <div class="food-grid">
+            {% for item in chart.breakfast %}
+            <div class="food-card">
+              <div class="food-image-wrapper">
+                {% set safe_name = item.name|lower|replace(' ',
+                '_')|replace('-', '_') %} {% set image_path =
+                'static/images/diet_images/' ~ safe_name ~ '/000001.jpg' %} {%
+                set encoded_image = image_path|b64encode %} {% if encoded_image
+                %}<img
+                  src="{{ encoded_image }}"
+                  alt="{{ item.name }}"
+                  class="food-image"
+                />{% else %}
+                <div class="food-placeholder">🍽️</div>
+                {% endif %}
+              </div>
+              <div class="food-content">
+                <div class="food-name">{{ item.name }}</div>
+                <div class="food-badges">
+                  <span class="food-calorie-badge"
+                    ><span>🔥</span><span>{{ item.calories }} cal</span></span
+                  >
+                  {% if diet_type == 'hybrid' and item.diet_source %} {% if
+                  item.diet_source == 'vegetarian' %}<span
+                    class="food-type-badge veg"
+                    ><span>🌱</span><span>Veg</span></span
+                  >
+                  {% elif item.diet_source == 'non_vegetarian' %}<span
+                    class="food-type-badge non-veg"
+                    ><span>🥩</span><span>Non-Veg</span></span
+                  >{% endif %} {% endif %}
+                </div>
+                {% if item.notes or item.description %}
+                <div class="food-description">
+                  {{ item.notes or item.description }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Lunch -->
+        {% if chart.lunch %}
+        <div class="meal-section">
+          <div class="meal-header lunch">
+            <div class="meal-title"><span>☀️</span><span>Lunch</span></div>
+            <div class="meal-calories-badge">
+              {{ chart.lunch|sum(attribute='calories') }} kcal
+            </div>
+          </div>
+          <div class="food-grid">
+            {% for item in chart.lunch %}
+            <div class="food-card">
+              <div class="food-image-wrapper">
+                {% set safe_name = item.name|lower|replace(' ',
+                '_')|replace('-', '_') %} {% set image_path =
+                'static/images/diet_images/' ~ safe_name ~ '/000001.jpg' %} {%
+                set encoded_image = image_path|b64encode %} {% if encoded_image
+                %}<img
+                  src="{{ encoded_image }}"
+                  alt="{{ item.name }}"
+                  class="food-image"
+                />{% else %}
+                <div class="food-placeholder">🍽️</div>
+                {% endif %}
+              </div>
+              <div class="food-content">
+                <div class="food-name">{{ item.name }}</div>
+                <div class="food-badges">
+                  <span class="food-calorie-badge"
+                    ><span>🔥</span><span>{{ item.calories }} cal</span></span
+                  >
+                  {% if diet_type == 'hybrid' and item.diet_source %} {% if
+                  item.diet_source == 'vegetarian' %}<span
+                    class="food-type-badge veg"
+                    ><span>🌱</span><span>Veg</span></span
+                  >
+                  {% elif item.diet_source == 'non_vegetarian' %}<span
+                    class="food-type-badge non-veg"
+                    ><span>🥩</span><span>Non-Veg</span></span
+                  >{% endif %} {% endif %}
+                </div>
+                {% if item.notes or item.description %}
+                <div class="food-description">
+                  {{ item.notes or item.description }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Snacks -->
+        {% if chart.snacks %}
+        <div class="meal-section">
+          <div class="meal-header snacks">
+            <div class="meal-title"><span>🍎</span><span>Snacks</span></div>
+            <div class="meal-calories-badge">
+              {{ chart.snacks|sum(attribute='calories') }} kcal
+            </div>
+          </div>
+          <div class="food-grid">
+            {% for item in chart.snacks %}
+            <div class="food-card">
+              <div class="food-image-wrapper">
+                {% set safe_name = item.name|lower|replace(' ',
+                '_')|replace('-', '_') %} {% set image_path =
+                'static/images/diet_images/' ~ safe_name ~ '/000001.jpg' %} {%
+                set encoded_image = image_path|b64encode %} {% if encoded_image
+                %}<img
+                  src="{{ encoded_image }}"
+                  alt="{{ item.name }}"
+                  class="food-image"
+                />{% else %}
+                <div class="food-placeholder">🍽️</div>
+                {% endif %}
+              </div>
+              <div class="food-content">
+                <div class="food-name">{{ item.name }}</div>
+                <div class="food-badges">
+                  <span class="food-calorie-badge"
+                    ><span>🔥</span><span>{{ item.calories }} cal</span></span
+                  >
+                  {% if diet_type == 'hybrid' and item.diet_source %} {% if
+                  item.diet_source == 'vegetarian' %}<span
+                    class="food-type-badge veg"
+                    ><span>🌱</span><span>Veg</span></span
+                  >
+                  {% elif item.diet_source == 'non_vegetarian' %}<span
+                    class="food-type-badge non-veg"
+                    ><span>🥩</span><span>Non-Veg</span></span
+                  >{% endif %} {% endif %}
+                </div>
+                {% if item.notes or item.description %}
+                <div class="food-description">
+                  {{ item.notes or item.description }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Dinner -->
+        {% if chart.dinner %}
+        <div class="meal-section">
+          <div class="meal-header dinner">
+            <div class="meal-title"><span>🌙</span><span>Dinner</span></div>
+            <div class="meal-calories-badge">
+              {{ chart.dinner|sum(attribute='calories') }} kcal
+            </div>
+          </div>
+          <div class="food-grid">
+            {% for item in chart.dinner %}
+            <div class="food-card">
+              <div class="food-image-wrapper">
+                {% set safe_name = item.name|lower|replace(' ',
+                '_')|replace('-', '_') %} {% set image_path =
+                'static/images/diet_images/' ~ safe_name ~ '/000001.jpg' %} {%
+                set encoded_image = image_path|b64encode %} {% if encoded_image
+                %}<img
+                  src="{{ encoded_image }}"
+                  alt="{{ item.name }}"
+                  class="food-image"
+                />{% else %}
+                <div class="food-placeholder">🍽️</div>
+                {% endif %}
+              </div>
+              <div class="food-content">
+                <div class="food-name">{{ item.name }}</div>
+                <div class="food-badges">
+                  <span class="food-calorie-badge"
+                    ><span>🔥</span><span>{{ item.calories }} cal</span></span
+                  >
+                  {% if diet_type == 'hybrid' and item.diet_source %} {% if
+                  item.diet_source == 'vegetarian' %}<span
+                    class="food-type-badge veg"
+                    ><span>🌱</span><span>Veg</span></span
+                  >
+                  {% elif item.diet_source == 'non_vegetarian' %}<span
+                    class="food-type-badge non-veg"
+                    ><span>🥩</span><span>Non-Veg</span></span
+                  >{% endif %} {% endif %}
+                </div>
+                {% if item.notes or item.description %}
+                <div class="food-description">
+                  {{ item.notes or item.description }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% if not loop.last %}
+    <div class="page-break"></div>
+    {% endif %} {% endfor %}
+
+    <div class="page-break"></div>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="page-container">
+      <div class="section-header">
+        <span class="section-header-icon">💡</span>
+        <span>Personalized Health & Dietary Recommendations</span>
+      </div>
+
+      <div class="alert-box info" style="margin-bottom: 25px">
+        <div class="alert-title">
+          <span>📋</span
+          ><span>Tailored Recommendations Based on Your Risk Profile</span>
+        </div>
+        <div class="alert-content">
+          These recommendations have been carefully selected based on your
+          <strong>{{ outcome.risk_category.replace('_', ' ').title() }}</strong>
+          classification and are designed to support your cardiovascular health
+          and overall wellness.
+        </div>
+      </div>
+
+      <div class="recommendations-grid">
+        {% if outcome.risk_category == 'high_risk' %}
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Strict Low-Sodium Diet:</strong> Maintain sodium intake
+            below 2,300mg per day to reduce blood pressure and cardiovascular
+            strain.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Limit Saturated Fats:</strong> Keep saturated fat
+            consumption to less than 10% of total daily calories to improve
+            cholesterol levels.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Omega-3 Rich Foods:</strong> Include fatty fish, walnuts,
+            and flaxseeds daily for their heart-protective anti-inflammatory
+            properties.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Increased Produce Intake:</strong> Consume at least 5
+            servings of fruits and vegetables daily for essential vitamins,
+            minerals, and fiber.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Whole Grains Priority:</strong> Choose whole grains over
+            refined grains in all meals to maintain stable blood sugar and
+            improve heart health.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Eliminate Processed Foods:</strong> Severely limit or
+            eliminate processed foods, fast foods, and added sugars from your
+            diet.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Portion Control:</strong> Practice strict portion control
+            and consider using smaller plates to manage caloric intake.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Regular Medical Follow-ups:</strong> Schedule regular
+            check-ups with your healthcare provider to monitor progress and
+            adjust treatment as needed.
+          </div>
+        </div>
+        {% elif outcome.risk_category == 'moderate_risk' %}
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Balanced Diet Variety:</strong> Maintain a well-balanced
+            diet with variety from all food groups for comprehensive nutrition.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Heart-Healthy Fats:</strong> Include olive oil, avocados,
+            and nuts daily for beneficial monounsaturated and polyunsaturated
+            fats.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Lean Protein Sources:</strong> Choose lean proteins such as
+            poultry, fish, legumes, and tofu to support muscle health without
+            excess fat.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>High-Fiber Foods:</strong> Consume high-fiber foods
+            including vegetables, fruits, and whole grains to improve digestive
+            and heart health.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Moderate Processed Foods:</strong> Limit processed and fried
+            foods to occasional treats rather than regular consumption.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Mindful Eating:</strong> Monitor portion sizes and practice
+            mindful eating to maintain healthy weight and prevent overeating.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Adequate Hydration:</strong> Stay hydrated with water as
+            your primary beverage, aiming for 8-10 glasses daily.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Meal Timing:</strong> Consider meal timing and avoid
+            late-night eating to support healthy metabolism and digestion.
+          </div>
+        </div>
+        {% else %}
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Maintain Healthy Patterns:</strong> Continue maintaining
+            healthy eating patterns as prevention is key to long-term
+            cardiovascular health.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Colorful Produce Daily:</strong> Include a colorful variety
+            of fruits and vegetables in your daily meals for diverse nutrients
+            and antioxidants.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Protein Variety:</strong> Choose lean proteins and vary your
+            protein sources throughout the week for balanced amino acid intake.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Stay Active:</strong> Maintain physical activity and a
+            healthy weight through regular exercise and movement.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Good Hydration:</strong> Practice good hydration habits with
+            adequate water intake throughout the day.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Mindful Eating:</strong> Use mindful eating practices and
+            take time to enjoy your meals without distractions.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Meal Planning:</strong> Plan and prepare meals ahead of time
+            when possible to ensure nutritious choices.
+          </div>
+        </div>
+        <div class="recommendation-item">
+          <div class="recommendation-icon">✓</div>
+          <div class="recommendation-text">
+            <strong>Regular Check-ups:</strong> Schedule regular health
+            check-ups to monitor your continued wellness and catch any changes
+            early.
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="subsection-header" style="margin-top: 35px">
+        📝 Essential Guidelines for Success
+      </div>
+
+      <div class="alert-box info">
+        <div class="alert-content">
+          <ul>
+            <li>
+              <strong>Follow Recommended Portions:</strong> Adhere to the
+              portion sizes specified in your diet charts for optimal results
+              and caloric balance.
+            </li>
+            <li>
+              <strong>Hydration is Key:</strong> Drink at least 8-10 glasses
+              (2-2.5 liters) of water throughout the day to support metabolism
+              and overall health.
+            </li>
+            <li>
+              <strong>Consistent Meal Timing:</strong> Maintain regular meal
+              timings as suggested in the charts to regulate blood sugar and
+              energy levels.
+            </li>
+            <li>
+              <strong>Physical Activity:</strong> Include regular physical
+              activity as recommended by your healthcare provider (aim for at
+              least 150 minutes of moderate activity per week).
+            </li>
+            <li>
+              <strong>Monitor Your Response:</strong> Pay attention to your
+              body's response to the diet plan and adjust portions as needed
+              based on hunger and energy levels.
+            </li>
+            <li>
+              <strong>Food Quality Matters:</strong> Choose fresh, whole foods
+              whenever possible and minimize processed ingredients for maximum
+              nutritional benefit.
+            </li>
+            <li>
+              <strong>Gradual Changes:</strong> If transitioning to this diet,
+              make changes gradually to allow your body to adapt comfortably.
+            </li>
+            <li>
+              <strong>Track Progress:</strong> Keep a food diary or use a
+              tracking app to monitor your adherence and identify patterns in
+              your eating habits.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {% if diet_type == 'hybrid' %}
+      <div class="subsection-header">⚖️ Hybrid Diet Specific Guidelines</div>
+      <div class="alert-box warning">
+        <div class="alert-content">
+          <p style="margin-bottom: 12px">
+            <strong
+              >Your hybrid diet combines the benefits of both vegetarian and
+              non-vegetarian nutrition:</strong
+            >
+          </p>
+          <ul>
+            <li>
+              <strong>Balanced Protein Intake:</strong> Your {{ veg_percentage
+              }}% vegetarian and {{ 100 - veg_percentage }}% non-vegetarian
+              split ensures adequate protein from both plant and animal sources
+              throughout the day.
+            </li>
+            <li>
+              <strong>Meal Alternation:</strong> Plan your meals to alternate
+              between vegetarian and non-vegetarian options for nutritional
+              variety and prevent dietary monotony.
+            </li>
+            <li>
+              <strong>Iron Absorption:</strong> Combine vegetarian iron sources
+              (legumes, spinach) with vitamin C-rich foods (citrus, tomatoes) to
+              enhance iron absorption.
+            </li>
+            <li>
+              <strong>Protein Complementation:</strong> When consuming
+              vegetarian meals, combine different plant protein sources (grains
+              + legumes) for complete amino acid profiles.
+            </li>
+            <li>
+              <strong>Digestive Comfort:</strong> Allow adequate time between
+              heavy non-vegetarian meals to support optimal digestion.
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="page-break"></div>
+
+    <!-- DISCLAIMER -->
+    <div class="page-container">
+      <div class="disclaimer">
+        <div class="disclaimer-header">
+          <div class="disclaimer-icon">⚠️</div>
+          <div>
+            <div class="disclaimer-title">Important Medical Disclaimer</div>
+          </div>
+        </div>
+        <div class="disclaimer-text">
+          <p style="margin-bottom: 12px">
+            <strong>Please read this disclaimer carefully:</strong>
+          </p>
+          <p style="margin-bottom: 12px">
+            This personalized diet plan has been generated using artificial
+            intelligence algorithms based on the health parameters and risk
+            assessment data you provided. While our system uses
+            scientifically-backed nutritional principles and medical research,
+            this report is intended for
+            <strong>informational and educational purposes only</strong>.
+          </p>
+          <p style="margin-bottom: 12px">
+            <strong
+              >This diet plan should NOT replace professional medical advice,
+              diagnosis, or treatment.</strong
+            >
+            It is essential that you consult with qualified healthcare
+            professionals, including:
+          </p>
+          <ul style="margin: 12px 0 12px 20px">
+            <li>
+              Your primary care physician or cardiologist for medical evaluation
+              and monitoring
+            </li>
+            <li>
+              A registered dietitian or nutritionist for personalized dietary
+              guidance
+            </li>
+            <li>
+              Any relevant specialists based on your specific health conditions
+            </li>
+          </ul>
+          <p style="margin-bottom: 12px">
+            <strong
+              >Always seek professional advice before making significant changes
+              to your diet, especially if you:</strong
+            >
+          </p>
+          <ul style="margin: 12px 0 12px 20px">
+            <li>
+              Have existing health conditions (diabetes, hypertension, kidney
+              disease, etc.)
+            </li>
+            <li>
+              Are taking medications that may interact with dietary changes
+            </li>
+            <li>Have food allergies or intolerances</li>
+            <li>Are pregnant, nursing, or planning to become pregnant</li>
+            <li>Have a history of eating disorders or disordered eating</li>
+          </ul>
+          <p style="margin-bottom: 0">
+            CarePulse and its creators assume no liability for any health
+            consequences resulting from following this diet plan. Individual
+            results may vary, and it is your responsibility to seek appropriate
+            medical supervision when implementing any dietary or lifestyle
+            changes.
+          </p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="footer-brand">
+          🏥 CarePulse - Personalized Health & Wellness
+        </div>
+        <div class="footer-text">
+          Advanced AI-Powered Health Assessment & Diet Planning System
+        </div>
+        <div class="footer-text" style="margin-top: 8px">
+          For questions or support, please consult your healthcare provider
+        </div>
+        <div
+          class="footer-text"
+          style="
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-300);
+          "
+        >
+          Report Generated: {{ generation_date.strftime('%B %d, %Y at %I:%M %p')
+          }}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
